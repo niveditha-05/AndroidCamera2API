@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
     private CameraCaptureSession mCameraCaptureSession;
     private CameraCharacteristics mCameraInfo;
     private CameraCaptureSession mCameraOps;
-    private MotionEvent mManualFocusEngaged;
+    private boolean mManualFocusEngaged;
     private final CameraCaptureSession.CaptureCallback mSessionCaptureCallback
             = new CameraCaptureSession.CaptureCallback() {
 
@@ -199,8 +199,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
+        public boolean onTouch(View view, MotionEvent motionEvent) throws CameraAccessException {
             final int actionMasked = motionEvent.getActionMasked();
             if (actionMasked != MotionEvent.ACTION_DOWN) {
                 return false;
@@ -233,7 +232,11 @@ public class MainActivity extends AppCompatActivity {
                         //the focus trigger is complete -
                         //resume repeating (preview surface will get frames), clear AF trigger
                         mPreviewCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, null);
-                        mCameraOps.setRepeatingRequest(mPreviewCaptureRequestBuilder.build(), null, null);
+                        try {
+                            mCameraOps.setRepeatingRequest(mPreviewCaptureRequestBuilder.build(), null, null);
+                        } catch (CameraAccessException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
