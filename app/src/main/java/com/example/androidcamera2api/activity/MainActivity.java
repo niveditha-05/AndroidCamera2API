@@ -1,18 +1,15 @@
-package com.example.androidcamera2api;
+package com.example.androidcamera2api.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
-import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
@@ -31,26 +28,21 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.telecom.VideoProfile;
-import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
-import android.view.textclassifier.TextLanguage;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.material.badge.BadgeUtils;
+import com.example.androidcamera2api.R;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.annotation.Repeatable;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnCapture;
     private TextureView textureView;
+
+    public static final String CAMERA_FRONT = "1";
+    public static final String CAMERA_BACK = "0";
+
+    private String cameraId = CAMERA_BACK;
     //check state orientation of output image
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
 
@@ -75,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         ORIENTATIONS.append(Surface.ROTATION_270,180);
     }
 
-    private String cameraId;
+    //private String cameraId;
     private CameraDevice cameraDevice;
     private CameraCaptureSession cameraCaptureSession;
     private CaptureRequest captureRequest;
@@ -536,5 +533,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
+
 
 }
